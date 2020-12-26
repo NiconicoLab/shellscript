@@ -65,3 +65,62 @@ else
     echo "Dir nothing."
 fi
 
+#空の配列作成
+fnameary=()
+dnameary=()
+
+#bashファイルのパスに拡張子(.tar.gz)を追加
+#file_search_path=${bash_path}/\*.tar.gz
+#カレントディレクトリを元に指定
+file_search_path=./\*.tar.gz
+
+#tar.gzファイル名のみを取得
+for filepath in ${file_search_path}; do
+    if [ -f $filepath ] ; then
+        fnameary+=(`basename ${filepath}`)
+#       echo `basename ${filepath}`
+#       ファイル名のみ取得して配列に格納(上と同じ処理内容)
+#       str=`basename ${filepath}`
+#       echo ${str} #debug
+        dnameary+=(`basename ${filepath} .tar.gz`)
+#       echo `basename ${filepath} .tar.gz`
+    fi
+done
+
+echo "圧縮ファイル一覧"
+count=0
+for i in ${fnameary[@]}; do
+#   echo $i #debug
+#   echo "圧縮展開先ディレクトリ"
+#   echo ${dnameary[count]} #debug
+#   ディレクトリ作成
+    mkdir ${dnameary[count]}
+    echo ./$i ./${dnameary[count]}
+#   展開
+    tar -xvzf $i -C ./${dnameary[count]}
+    count=`expr $count + 1` #インクリメント
+done
+
+echo "展開先ディレクトリのパス一覧"
+for i in ${dnameary[@]}; do
+#   パスの生成(ここでは圧縮先にtmpディレクトリがあると想定)
+    path=./${i}/tmp
+    echo $path #debug
+done
+
+
+#圧縮コマンド(debug用)
+#tar zcvf test.tar.gz test
+
+#ループ文(10回分)
+count=0
+while true
+do
+    echo $count
+    count=`expr $count + 1`
+    if [ $count -eq 10 ]; then
+        break
+    fi
+done
+
+echo "end"
