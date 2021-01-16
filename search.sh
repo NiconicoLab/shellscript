@@ -123,4 +123,25 @@ do
     fi
 done
 
-echo "end"
+if [ ! -f ./search.sh ]; then
+    echo 'ファイルが存在しません'
+else
+    echo 'ファイルが存在します'
+fi
+
+if [ ! -f ./search.sh.bak ]; then
+    echo 'ファイルが存在しません'
+else
+    echo 'ファイルが存在します'
+fi
+
+if [ -f ./tmp ]; then
+    ./tmp
+    if [ $? = 0 ]; then
+        echo "戻り値0"
+    else
+        echo "戻り値1"
+    fi
+fi
+
+echo end:`date`
