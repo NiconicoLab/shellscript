@@ -1,4 +1,5 @@
 #!/bin/bash
 
-echo "$0"
+echo "start === $0 ==="
 
+echo "end   === $0 ==="
